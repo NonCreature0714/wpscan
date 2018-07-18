@@ -28,8 +28,11 @@ def usage
   puts '-Enumerate installed themes ...'
   puts "ruby #{script_name} --url www.example.com --enumerate t"
   puts
-  puts '-Enumerate users ...'
+  puts '-Enumerate users (from 1 - 10)...'
   puts "ruby #{script_name} --url www.example.com --enumerate u"
+  puts
+  puts '-Enumerate users (from 1 - 20)...'
+  puts "ruby #{script_name} --url www.example.com --enumerate u[1-20]"
   puts
   puts '-Enumerate installed timthumbs ...'
   puts "ruby #{script_name} --url www.example.com --enumerate tt"
@@ -46,7 +49,7 @@ def usage
   puts '-Use custom plugins directory ...'
   puts "ruby #{script_name} -u www.example.com --wp-plugins-dir wp-content/custom-plugins"
   puts
-  puts '-Update the DB ...'
+  puts '-Update the Database ...'
   puts "ruby #{script_name} --update"
   puts
   puts '-Debug output ...'
@@ -117,6 +120,58 @@ def help
   puts
 end
 
+
+def clean_uri(entries)
+  # Extract elements
+  entries.flatten!
+  # Remove any leading/trailing spaces
+  entries.collect{|x| x.strip || x }
+  # End Of Line issues
+  entries.collect{|x| x.chomp! || x }
+  # Remove nil's
+  entries.compact
+  # Unique values only
+  entries.uniq!
+
+  return entries
+end
+
+# Return the full URL
+def full_uri(entries)
+  return_object = []
+  # Each value now, try and make it a full URL
+  entries.each do |d|
+    begin
+      temp = @uri.clone
+      temp.path = d.strip
+    rescue URI::Error
+      temp = d.strip
+    end
+    return_object << temp.to_s
+  end
+
+  return return_object
+end
+
+# Parse humans.txt
+# @return [ Array ] URLs generated from humans.txt
+def parse_txt(url)
+  return_object = []
+  response = Browser.get(url.to_s)
+  body = response.body
+
+  # Get all non-comments
+  entries = body.split(/\n/)
+
+  # Did we get something?
+  if entries
+    # Remove any rubbish
+    entries = clean_uri(entries)
+  end
+  return return_object
+end
+
+
 # Hook to check if the target if down during the scan
 # And have the number of requests performed to display at the end of the scan
 # The target is considered down after 30 requests with status = 0
@@ -135,3 +190,4 @@ Typhoeus.on_complete do |response|
 
   sleep(Browser.instance.throttle)
 end
+

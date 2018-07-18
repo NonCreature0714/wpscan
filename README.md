@@ -3,14 +3,13 @@
 
 [![Build Status](https://travis-ci.org/wpscanteam/wpscan.svg?branch=master)](https://travis-ci.org/wpscanteam/wpscan)
 [![Code Climate](https://img.shields.io/codeclimate/github/wpscanteam/wpscan.svg)](https://codeclimate.com/github/wpscanteam/wpscan)
-[![Dependency Status](https://img.shields.io/gemnasium/wpscanteam/wpscan.svg)](https://gemnasium.com/wpscanteam/wpscan)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wpscanteam/wpscan.svg)](https://hub.docker.com/r/wpscanteam/wpscan/)
 
 # LICENSE
 
 ## WPScan Public Source License
 
-The WPScan software (henceforth referred to simply as "WPScan") is dual-licensed - Copyright 2011-2017 WPScan Team.
+The WPScan software (henceforth referred to simply as "WPScan") is dual-licensed - Copyright 2011-2018 WPScan Team.
 
 Cases that include commercialization of WPScan require a commercial, non-free license. Otherwise, WPScan can be used without charge under the terms set out below.
 
@@ -102,6 +101,10 @@ Windows is not supported
 We suggest you use our official Docker image from https://hub.docker.com/r/wpscanteam/wpscan/ to avoid installation problems.
 
 # DOCKER
+## Install Docker
+[https://docs.docker.com/engine/installation/](https://docs.docker.com/engine/installation/)
+
+## Get the image
 Pull the repo with `docker pull wpscanteam/wpscan`
 
 ## Start WPScan
@@ -137,7 +140,7 @@ Published on https://hub.docker.com/r/wpscanteam/wpscan/
 
 ## Prerequisites
 
-- Ruby >= 2.1.9 - Recommended: 2.4.2
+- Ruby >= 2.1.9 - Recommended: 2.5.1
 - Curl >= 7.21  - Recommended: latest - FYI the 7.29 has a segfault
 - RubyGems      - Recommended: latest
 - Git
@@ -174,8 +177,8 @@ https://rvm.io/integration/gnome-terminal#integrating-rvm-with-gnome-terminal
     curl -sSL https://get.rvm.io | bash -s stable
     source ~/.rvm/scripts/rvm
     echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
-    rvm install 2.4.2
-    rvm use 2.4.2 --default
+    rvm install 2.5.1
+    rvm use 2.5.1 --default
     echo "gem: --no-ri --no-rdoc" > ~/.gemrc
     git clone https://github.com/wpscanteam/wpscan.git
     cd wpscan
